@@ -18,6 +18,8 @@ class CreatePageTranslationsTable extends Migration
             $table->unsignedInteger('page_id');
             $table->string('locale', 50);
             $table->string('title', 255);
+            $table->string('meta_title');
+            $table->string('meta_description');
             $table->string('route', 255);
             $table->timestamps();
 
@@ -26,11 +28,6 @@ class CreatePageTranslationsTable extends Migration
                 ->on(config('pagebuilder.storage.database.prefix') . 'pages')
                 ->onUpdate('cascade')->onDelete('cascade');
 
-        });
-
-        Schema::table(config('pagebuilder.storage.database.prefix') . 'pages', function (Blueprint $table) {
-            $table->dropColumn('title');
-            $table->dropColumn('route');
         });
     }
 
@@ -41,11 +38,6 @@ class CreatePageTranslationsTable extends Migration
      */
     public function down()
     {
-        Schema::table(config('pagebuilder.storage.database.prefix') . 'pages', function (Blueprint $table) {
-            $table->string('route', 512)->unique()->after('name');
-            $table->string('title', 256)->after('name');
-        });
-
         Schema::dropIfExists(config('pagebuilder.storage.database.prefix') . 'page_translations');
     }
 }

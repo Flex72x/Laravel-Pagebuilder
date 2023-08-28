@@ -15,10 +15,8 @@ class CreatePagesTable extends Migration
     {
         Schema::create(config('pagebuilder.storage.database.prefix') . 'pages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 256);
-            $table->string('title', 256);
-            $table->string('route', 512)->unique();
-            $table->string('layout', 256);
+            $table->string('name', 255);
+            $table->string('layout', 255);
             $table->longText('data')->nullable();
             $table->timestamps();
         });
